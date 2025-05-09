@@ -20,12 +20,11 @@ def unscentedKalmanFilter(signal_x, signal_y, timestamp):
         signal_y (vector): X coordinate of the crop center.
         timestamp (float): Y coordinate of the crop center.
         
-
     Returns:
         estimated state vectors - x, y, vx, vy, ax, ay 
     """
 
-    # Init 2D Unscented Kalman Filter: 
+    # Init state vector: 
     x0 = signal_x[0]
     y0 = signal_y[0]
     vx0 = 1.0
@@ -33,6 +32,7 @@ def unscentedKalmanFilter(signal_x, signal_y, timestamp):
     ax0 = 0.0
     ay0 = 0.0
 
+    # Init 2D Unscented Kalman Filter object: 
     ukf = UKF2D([x0, y0, vx0, vy0, ax0, ay0], timestamp)
     
     #Init state estimations over time: 
