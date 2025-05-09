@@ -36,7 +36,7 @@ The follwing python libraries are needed:
 pip install numpy
 pip install pandas
 pip install matplotlib
-pip install PIL
+pip install pillow
 pip install opencv-python
 pip install imageio
 ```
