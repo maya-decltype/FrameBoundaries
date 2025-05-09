@@ -1,6 +1,8 @@
 
-# 📦 Frame Boundaries Stabilization
-
+# 📦 Stream Boundary Analysis and Noise Reduction
+The following algorithm objective is to generate smooth stream boundaries for video frames by processing frame boundary data. 
+The algorithm uses Unscented Kalman Filter to reduce noise, ensure a coherent transition across frames, with minimum time delay.
+The algorithm result and analysis can be found below.
 
 ---
 
