@@ -38,6 +38,11 @@ pip install PIL
 pip install opencv-python
 pip install imageio
 ```
+- Download the repository and save it on your PC. 
+- Open the repository and run the python script: frameBoundaries.py
+- You should see the plot of the input signals and estimated signals.
+- When you close the plot windows, You able to see the simulation of the cropped frames with the ball location.
+- Output: The output files will be created in the Output directory (also attached for my running) - A gif file of the cropped frame simulation and the output csv. 
 
 ---
 
