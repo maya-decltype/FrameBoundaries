@@ -23,10 +23,15 @@ https://groups.seas.harvard.edu/courses/cs281/papers/unscented.pdf
 
 ## 🛠️ Installation
 
-No external libraries are required other than `numpy`.
+The follwing python libraries are needed:
 
 ```bash
 pip install numpy
+pip install pandas
+pip install matplotlib
+pip install PIL
+pip install opencv-python
+pip install imageio
 ```
 
 ---
