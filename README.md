@@ -105,8 +105,18 @@ You can extract just the estimated position or all states as needed.
 ---
 
 ## 📈 Algorithm Result and Analysis
+The plot below illustrates the behavior of the input frame center signal before and after applying the Kalman filter:
 
 ![Alt Text](Output/localiztion_result.png)
 
+The raw signal is highly noisy, exhibiting significant fluctuations that obscure the underlying trend. The noise may be due to various factors, such as measurement errors or external disturbances, making it difficult to extract meaningful information from the data.
+
+Upon applying the Kalman filter, the signal is significantly smoother. The filter effectively reduces the noise, revealing a much clearer representation of the signal’s true behavior. This demonstrates the Kalman filter's ability to perform noise reduction while maintaining the core characteristics of the signal.
+
+One notable side effect of the Kalman filter is the slight delay in the filtered signal. This delay occurs due to the filter’s reliance on previous and current measurements to estimate the state, which can introduce a phase lag, especially in real-time applications. While this delay is minimal, it is an important consideration when applying the filter in time-sensitive systems.
+
+The plot below illustrate the velocity and acceleration, also estimated by this filter:
+
+![Alt Text](Output/state_estimation.png)
 
 ---
