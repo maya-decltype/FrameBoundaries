@@ -1,7 +1,7 @@
 
 # 📦 UKF2D — Unscented Kalman Filter for 2D Tracking
 
-`UKF2D` is a simple implementation of a 2D Unscented Kalman Filter from scratch in Python. It is designed to estimate the **position, velocity, and acceleration** of an object (e.g., frame position) using given noisy position measurements in x and y.
+`UKF2D` is a simple implementation of a 2D Unscented Kalman Filter from scratch in Python. It is designed to estimate the **position, velocity, and acceleration** of an object using given noisy position measurements in x and y.
 
 This filter is useful when the object's **velocity is not constant** — it assumes a **constant-acceleration motion model**, making it more robust to sudden changes in velocity.
 
@@ -31,22 +31,6 @@ pip install numpy
 
 ---
 
-## 🧠 UKF Model Summary
-
-- **State vector**:  
-  \
-  \[
-  \mathbf{x} = \begin{bmatrix} x \\ y \\ v_x \\ v_y \\ a_x \\ a_y \end{bmatrix}
-  \]
-
-- **Measurements**:  
-  Noisy observations of position \([x, y]\)
-
-- **Motion model**:  
-  Constant acceleration update equations.
-
----
-
 ## 📋 Usage Example
 
 ```python
@@ -67,34 +51,17 @@ def unscentedKalmanFilter(signal_x, signal_y, timestamp):
     """
 
     # Init 2D Unscented Kalman Filter: 
-    x0 = signal_x[0]
-    y0 = signal_y[0]
     vx0 = 1.0
     vy0 = 1.0
     ax0 = 0.0
     ay0 = 0.0
 
-    ukf = UKF2D([x0, y0, vx0, vy0, ax0, ay0], timestamp)
+    ukf = UKF2D([signal_x[0], signal_y[0], vx0, vy0, ax0, ay0], timestamp)
     
-    #Init state estimations over time: 
-    x_est = []
-    y_est = []
-    vx_est = []
-    vy_est = []
-    accx_est = []
-    accy_est = []
-
     for x_measure, y_measure in zip(signal_x, signal_y):
         # Estimate next frame state vector:
         x, y, vx, vy, ax, ay = ukf.step([x_measure, y_measure])
-        x_est.append(x)
-        y_est.append(y)
-        vx_est.append(vx)
-        vy_est.append(vy)
-        accx_est.append(ax)
-        accy_est.append(ay)
-
-    return x_est, y_est, vx_est, vy_est, accx_est, accy_est
+        print("Current state:",  x, y, vx, vy, ax, ay)
 ```
 
 ---
@@ -119,13 +86,11 @@ You can extract just the estimated position or all states as needed.
 
 ---
 
+
 ## 📚 Files
 
 - `ukf2d.py` – The UKF2D class implementation
-- `example.py` – (Optional) Example usage and plotting
+- `framesBoundaries.py` – Use ukf2d to estimate frame boundaries and create result plotting and analysis
 
 ---
 
-## 🧪 License
-
-MIT License – feel free to use, modify, and distribute.
