@@ -142,7 +142,6 @@ Using the above parameter to the filter, we got the following results:
 - 60% of the cropped frames included the ball
 - The average distance from the ball to the frame center is 85 pixels
 
-Conclusion
 The ball-to-frame ratio provides valuable insight into how frequent the ball is positioned within the frame over time, aiding in tracking and ensuring consistent coverage throughout the sequence of frames.
 
 ---
