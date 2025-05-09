@@ -83,7 +83,7 @@ def unscentedKalmanFilter(signal_x, signal_y, timestamp):
 
 ---
 
-## ⚙️ Parameters
+## ⚙️ Parameters to UKF2D
 
 | Parameter         | Description                                           |
 |------------------|-------------------------------------------------------|
