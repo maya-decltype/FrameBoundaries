@@ -1,3 +1,4 @@
+# Written by Maya Dekel-Klein, May 2025 
 
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -54,6 +55,29 @@ def unscentedKalmanFilter(signal_x, signal_y, timestamp):
         accy_est.append(ay)
 
     return x_est, y_est, vx_est, vy_est, accx_est, accy_est
+
+#== running_average ==============================
+def running_average(signal, window_size):
+    """
+    Apply a running average (moving average) filter to a 1D signal.
+    
+    Parameters:
+        signal (list or np.ndarray): The input signal.
+        window_size (int): The number of samples over which to average.
+        
+    Returns:
+        np.ndarray: The filtered signal.
+    """
+    if window_size < 1:
+        raise ValueError("window_size must be at least 1")
+    if window_size > len(signal):
+        raise ValueError("window_size must not exceed signal length")
+
+    signal = np.asarray(signal)
+    kernel = np.ones(window_size) / window_size
+    filtered_signal = np.convolve(signal, kernel, mode='valid')
+    
+    return filtered_signal
 
 #== crop_from_panorama =================================
 def crop_from_panorama(pano_img, center_x, center_y, crop_width, crop_height, ball_x, ball_y):
@@ -117,9 +141,9 @@ def evaluate_crop_performance(frame_center_x, frame_center_y, crop_width_vec, ba
         crop_height = crop_width * 9 / 16
         
         left = cx - crop_width / 2
-        right = cx + crop_width / 2
+        right = left + crop_width
         top = cy - crop_height / 2
-        bottom = cy + crop_height / 2
+        bottom = top + crop_height
 
         # Check if the ball is inside the full panorama image:
         inside_panorama = 0 <= bx < panorama_width and 0 <= by < panorama_height
@@ -228,11 +252,14 @@ def show_result(pano_img, frame_center_x_filter, frame_center_y_filter, ball_x, 
 
     delay = int(1000 / fps)  # Delay between frames in milliseconds
     
+    # Smooth frame size for better zoom transitions: 
+    croped_width_filtered = running_average(crop_width_vec, window_size=2)
+
     target_width = np.min(crop_width_vec)
     target_height = target_width * 9 / 16
     target_size = (int(target_width), int(target_height))
 
-    for center_x, center_y, ball_x, ball_y, crop_width in zip(frame_center_x_filter, frame_center_y_filter, ball_x, ball_y, crop_width_vec):
+    for center_x, center_y, ball_x, ball_y, crop_width in zip(frame_center_x_filter, frame_center_y_filter, ball_x, ball_y, croped_width_filtered):
 
         # Crop each frame according to the filterred location:
         crop_height = crop_width * 9 / 16
