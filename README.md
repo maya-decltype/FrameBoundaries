@@ -126,6 +126,16 @@ The plot below illustrate the velocity and acceleration, also estimated by this 
 
 ![state estimation](Output/state_estimation.png)
 
+Ball-to-Frame Ratio Analysis
+Objective: By analyzing this ratio, we can assess the ball's movement within the frame, evaluate how well the ball is tracked, and detect any instances where the ball may be out of frame.
+The analysis focuses on the ratio of the ball’s position relative to the frame, where the signal represents the measured center location of the frame, and the ball’s position is provided for each frame.
+We define Ball-to-Frame ratio as the number of croped frames where the ball was inside the crop area vs. the total number of frames where the ball was anywhere inside the full panorama image.
 
+Using the above parameter to the filter, we got the following results:
+- 60% of the cropped frames included the ball
+- The average distance from the ball to the frame center is 85 pixels
+
+Conclusion
+The ball-to-frame ratio provides valuable insight into how frequent the ball is positioned within the frame over time, aiding in tracking and ensuring consistent coverage throughout the sequence of frames.
 
 ---
