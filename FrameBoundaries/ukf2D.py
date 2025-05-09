@@ -1,3 +1,5 @@
+# Written by Maya Dekel-Klein, May 2025 
+
 import numpy as np
 
 #-- Unscented Kalman Filter for 2D tracking ---
