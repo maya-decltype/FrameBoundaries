@@ -116,7 +116,8 @@ Running the algorithm with the following filter parameter:
 process_noise=0.01, 
 measurement_noise=[1000.0, 100.0]
 
-gives the optimal output in terms of noise vs. time delay
+gives the optimal output in terms of noise vs. time delay. The chosen measurement noise for x and y are different since the signal noise standard deviation in x is much heigher then in y.
+
 The plot below illustrates the behavior of the input frame center signal before and after applying the Kalman filter:
 
 ![localization result](Output/localiztion_result.png)
@@ -131,8 +132,7 @@ The plot below illustrate the velocity and acceleration, also estimated by this 
 
 ![state estimation](Output/state_estimation.png)
 
-Ball-to-Frame Ratio Analysis
-Objective: By analyzing this ratio, we can assess the ball's movement within the frame, evaluate how well the ball is tracked, and detect any instances where the ball may be out of frame.
+Additional interesting observation is the Ball-to-Frame Ratio Analysis - by analyzing this ratio, we can assess the ball's movement within the frame, evaluate how well the ball is tracked, and detect any instances where the ball may be out of the frame.
 The analysis focuses on the ratio of the ball’s position relative to the frame, where the signal represents the measured center location of the frame, and the ball’s position is provided for each frame.
 We define Ball-to-Frame ratio as the number of croped frames where the ball was inside the crop area vs. the total number of frames where the ball was anywhere inside the full panorama image.
 
