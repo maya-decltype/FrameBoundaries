@@ -17,9 +17,9 @@ def unscentedKalmanFilter(signal_x, signal_y, timestamp):
     Apply 2D unscented Kalman Filter on given 2d noisy signal x,y 
 
     Args:
-        signal_x (vector): Loaded panorama image.
-        signal_y (vector): X coordinate of the crop center.
-        timestamp (float): Y coordinate of the crop center.
+        signal_x (vector): X coordinate of the crop center
+        signal_y (vector): Y coordinate of the crop center.
+        timestamp (float): timestamp between samples
         
     Returns:
         estimated state vectors - x, y, vx, vy, ax, ay 
@@ -44,6 +44,7 @@ def unscentedKalmanFilter(signal_x, signal_y, timestamp):
     accx_est = []
     accy_est = []
 
+    # Run streaming & filter
     for x_measure, y_measure in zip(signal_x, signal_y):
         # Estimate next frame state vector:
         x, y, vx, vy, ax, ay = ukf.step([x_measure, y_measure])
@@ -90,6 +91,8 @@ def crop_from_panorama(pano_img, center_x, center_y, crop_width, crop_height, ba
         center_y (float): Y coordinate of the crop center.
         crop_width (int): Width of the crop (in pixels).
         crop_height (int): Height of the crop (in pixels).
+        ball_x (int): X coordinate of the ball
+        ball_y (int): Y coordinate of the ball
 
     Returns:
         PIL.Image.Image: Cropped image.
@@ -126,7 +129,8 @@ def evaluate_crop_performance(frame_center_x, frame_center_y, crop_width_vec, ba
         crop_width_vec (list): Width of the crop.
         ball_x (list): Ball x-coordinates per frame in panorama coordinates.
         ball_y (list): Ball y-coordinates per frame in panorama coordinates.
-
+        panorama_width (int): width of the panorama image
+        panorama_height (int) height of the panorama image
     Returns:
         dict: Dictionary with performance metrics.
     """
@@ -174,7 +178,14 @@ def evaluate_crop_performance(frame_center_x, frame_center_y, crop_width_vec, ba
 
 #== visualize_data =================================
 def visualize_data(signal_x, signal_y, state_estimations):
-
+"""
+    Create plot for state vector analysis
+    
+    Args:
+        signal_x (float): input X coordinate of the frame center.
+        signal_x (float): input Y coordinate of the frame center.
+        state_estimation(list of state vectors) - [x, y, vx, vy, ax, ay]
+    """
     frame_center_x_filter, frame_center_y_filter, vx_est, vy_est, accx_est, accy_est = state_estimations
 
     # Visuallize data over time:
@@ -196,7 +207,6 @@ def visualize_data(signal_x, signal_y, state_estimations):
     plt.ylabel("Y Position (pixels)")
     plt.legend()
     plt.grid(True)
-
 
     plt.figure(figsize=(10, 4))
 
@@ -310,7 +320,7 @@ ball_gt.columns = ball_gt.columns.str.strip()
 # Calculate timestamp between frames:
 dt = frame_boundaries['timestamp'][1] - frame_boundaries['timestamp'][0]
 
-# Apply Kalman filter combined with average filter to stabilize the camera:
+# Apply Unscented Kalman filter:
 state_estimations = unscentedKalmanFilter(frame_boundaries['x'], frame_boundaries['y'], dt)
 frame_center_x_filter, frame_center_y_filter, vx_est, vy_est, accx_est, accy_est = state_estimations
 
